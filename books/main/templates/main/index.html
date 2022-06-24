@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+
+
+{% block title %}
+Books
+{% endblock %}
+
+
+{% block content %}
+<h3> Всі книжки нашої бібліотеки <i>(зараз ми маємо {{ numbers }} найменувань)</i>. </h3>
+        {% if books %}
+            {% for el in books %}
+                 <div class="alert alert-success mt-1">
+                  <h3><u>{{ el.title }}</u></h3>
+                  <p><b><i>{{ el.author }}</i></b></p>
+                  <p><i>{{ el.text }}</i></p>
+                  <p><b>Рік видання: </b>    {{ el.published }}</p>
+                  <p><b>Кількість: </b>          {{ el.count }}</p>
+                 </div>
+            {% endfor %}
+        {% else %}
+            <p>В нашому каталозі такі книги відсутні. Сорі...</p>
+        {% endif %}
+{% endblock %}
+
+
+
+
+
