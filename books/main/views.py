@@ -7,6 +7,8 @@ from random import randint
 
 
 
+sort_direction = -1
+
 def index(request):
     books = Book.objects.all()
     # books = Book.objects.order_by('-id')
@@ -15,6 +17,14 @@ def index(request):
     # books = Book.objects.filter(id__lt=0)
     numbers = len(Book.objects.all())
     return render(request, 'main/index.html', {'title': 'Книги', 'books': books, 'numbers': numbers})
+
+def book_sort(request, sort_type='id'):
+    global sort_direction
+    sort_direction *= -1
+    books = Book.objects.order_by('-'*sort_direction + sort_type)
+    numbers = len(Book.objects.all())
+    return render(request, 'main/index_tab.html', {'title': 'Книги', 'books': books, 'numbers': numbers})
+
 
 
 def book_view(request, id=1):
