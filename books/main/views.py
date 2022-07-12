@@ -6,6 +6,19 @@ from faker import Faker
 from random import randint
 
 
+from rest_framework import generics
+
+from .models import Book
+from .forms import BookForm
+from .serializers import BookSerializers
+
+
+class BookAPIView(generics.ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializers
+
+
+
 
 sort_direction = -1
 
