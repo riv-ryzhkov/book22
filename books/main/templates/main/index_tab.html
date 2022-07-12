@@ -14,7 +14,9 @@ Main
       <th scope="col"><a type="button" class="btn btn-white btn-sm" href="/book/author/sort"><b>Автор</b></a></th>
       <th scope="col"><a type="button" class="btn btn-white btn-sm" href="/book/text/sort"><b>Опис</b></a></th>
       <th scope="col"><a type="button" class="btn btn-white btn-sm" href="/book/count/sort"><b>Кількість</b></a></th>
-      <th><a type="button" class="btn btn-success btn-sm" href="/book/new"><b>+Дод.Вип.</b></a></td>
+        {% if user.is_authenticated %}
+            <th><a type="button" class="btn btn-success btn-sm" href="/book/new"><b>+Дод.Вип.</b></a></td>
+        {% endif %}
       </th>
     </tr>
     </thead>
@@ -29,11 +31,15 @@ Main
             <td>{{ el.count }}</td>
             <td>
               <a type="button" class="btn btn-secondary btn-sm" href="/book/{{ el.id }}/view"><b>Подробиці...</b></a></td>
-            <td><a type="button" class="btn btn-white btn-sm" href="/book/{{ el.id }}/edit">
-              <img src="https://cdn-icons-png.flaticon.com/512/84/84380.png" width="24" height="24"></a></td>
+                  {% if user.is_authenticated %}
+
+                    <td><a type="button" class="btn btn-white btn-sm" href="/book/{{ el.id }}/edit">
+                    <img src="https://cdn-icons-png.flaticon.com/512/84/84380.png" width="24" height="24"></a></td>
 <!--              <td><a type="button" class="btn btn-white btn-sm" href="/book/{{ el.id }}/delete">Видалити</a></td>-->
-              <td><a type="button" class="btn btn-white btn-sm" href="/book/{{ el.id }}/delete">
-              <img src="https://mpng.subpng.com/20180711/wru/kisspng-computer-icons-clip-art-delete-image-icon-5b45dc96b07912.1758854315313051107228.jpg" width="24" height="24"></a></td>
+                    <td><a type="button" class="btn btn-white btn-sm" href="/book/{{ el.id }}/delete">
+                    <img src="https://mpng.subpng.com/20180711/wru/kisspng-computer-icons-clip-art-delete-image-icon-5b45dc96b07912.1758854315313051107228.jpg" width="24" height="24"></a></td>
+                  {% endif %}
+
           </tr>
         {% endfor %}
       {% else %}

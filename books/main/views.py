@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from .models import Book
 from .forms import BookForm
 from faker import Faker
@@ -28,7 +28,10 @@ def book_sort(request, sort_type='id'):
 
 
 def book_view(request, id=1):
-    book = Book.objects.get(id=id)
+    try:
+        book = Book.objects.get(id=id)
+    except Book.DoesNotExist:
+        raise Http404
     return render(request, 'main/book_view.html', {'title': 'Книги', 'book': book})
 
 
@@ -59,8 +62,12 @@ def book_edit(request, id=0):
         return redirect('main')
 
 def book_delete(request, id=0):
-    book = Book.objects.get(id=id)
-    book.delete()
+    try:
+        book = Book.objects.get(id=id)
+        book.delete()
+    except Book.DoesNotExist:
+        raise Http404
+
     # Book.save()
     # books = list(Book.objects.all())
     books = Book.objects.order_by('-id')
@@ -101,7 +108,7 @@ def create(request):
             form.save()
             return redirect('main')
 
-    form = BookForm()
+    form = BookForm(initial={'author': 'Невідомий автор'})
     context = {
         'form': form
     }

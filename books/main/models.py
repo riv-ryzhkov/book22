@@ -1,4 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+
+# class User1(AbstractUser):
+#     pass
+
 
 class Book(models.Model):
     title = models.CharField('Назва', max_length=50, default='title')

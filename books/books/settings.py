@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +29,23 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# AUTH_USER_MODEL = 'users.user'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.ukr.net'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_PORT = 465
+FROM_EMAIL = 'riv.ryzhkov@ukr.net'
+EMAIL_HOST_USER = 'riv.ryzhkov@ukr.net'
+EMAIL_HOST_PASSWORD = 'CFbbZXz3NEDWjsKZ'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
 
 # Application definition
 
@@ -41,7 +60,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_extensions',
 
-    'main'
+    'main',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -62,7 +82,8 @@ ROOT_URLCONF = 'books.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'main/templates')],
+        # 'DIRS': [BASE_DIR/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -113,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Kiev'
 
 USE_I18N = True
 
